@@ -617,6 +617,19 @@
       base.addCustomMenuItems()
 
       base.$el.append(navbar).find('.title_wrapper').prepend(base.title_link.clone());
+            // IOPN / Illinois Library banner
+      base.$el.prepend(
+        '<div class="iopn_header_common iopn_header_scalar">' +
+          '<img usemap="#lib-shared-header-wordmark-online__map__small" src="' + base.options.root_url + '/images/library">' +
+          '<map name="lib-shared-header-wordmark-online__map__small">' +
+            '<area shape="rect" coords="0,0,15,20" href="https://illinois.edu" alt="Block I">' +
+            '<area shape="rect" coords="25,0,200,20" href="https://www.library.illinois.edu" alt="Illinois Library">' +
+          '</map>' +
+          '<a id="iopn_mark" href="https://iopn.library.illinois.edu">' +
+            '<img src="' + base.options.root_url + '/images/iopn" alt="Illinois Open Publishing Network">' +
+          '</a>' +
+        '</div>'
+      );
 
       base.setupMainMenuEventHandling()
       base.setupGlobalMenuEventHandling()

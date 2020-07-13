@@ -1381,6 +1381,61 @@
                 var $footer = $('#footer');
                 $footer.append('<div id="colophon" class="caption_font"><p id="scalar-credit"></p></div>');
                 var $par = $footer.find('#scalar-credit');
+                $page = $('.page');
+                $page.after(
+                    '<footer class="footer-library" style="max-width: 100%; position: relative; margin-top: 15px" role="contentinfo">\n' +
+                    '                                <div class="row">\n' +
+                    '                                                        <div class="column footer-library_right" style="text: white">\n' +
+                    '                                                                <p>ABOUT</p>\n' +
+                    '                                                                <nav>\n' +
+                    '                                                                        <ul>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/iopn-mission/">About IOPN</a></li>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/advisory-board/">Advisory Board</a></li>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/policies/">Policies</a></li>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/news/">IOPN News</a></li>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/contact/">Contact</a></li>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/policies/#accessibility">Accessibility</a></li>\n' +
+                    '                                                                        </ul>\n' +
+                    '                                                                </nav>\n' +
+                    '\n' +
+                    '                                                        </div>\n' +
+                    '                                                        <div class="column footer-library_right">\n' +
+                    '                                                                <p>PUBLISHING WITHOUT WALLS</p><p>\n' +
+                    '                                                                </p><nav>\n' +
+                    '                                                                        <ul>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/publishing-without-walls/">About PWW</a></li>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/books/pww/catalog">PWW Catalog</a></li>\n' +
+                    '                                                                                <li><a href="https://pww.afro.illinois.edu">AFRO-PWW Project</a></li>\n' +
+                    '\n' +
+                    '                                                                        </ul>\n' +
+                    '                                                                </nav>\n' +
+                    '\n' +
+                    '\n' +
+                    '                                                        </div>\n' +
+                    '                                                        <div class="column footer-library_right">\n' +
+                    '                                                                <p>WINDSOR &amp; DOWNS</p>\n' +
+                    '                                                                <nav>\n' +
+                    '                                                                        <ul>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/windsor-downs-press/">About Windsor and Downs</a></li>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/books/windsor-downs/catalog">Windsor and Downs Catalog</a></li>\n' +
+                    '                                                                        </ul>\n' +
+                    '                                                                </nav>\n' +
+                    '\n' +
+                    '\n' +
+                    '                                                        </div>\n' +
+                    '\n' +
+                    '                                                        <div class="column footer-library_right">\n' +
+                    '                                                                <p>IOPN JOURNALS</p>\n' +
+                    '                                                                <nav>\n' +
+                    '                                                                        <ul>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/iopn-journals/">About IOPN Journals</a></li>\n' +
+                    '                                                                                <li><a href="https://iopn.library.illinois.edu/journals/">IOPN Journals Catalog</a></li>\n' +
+                    '                                                                        </ul>\n' +
+                    '                                                                </nav>\n' +
+                    '                                                        </div>\n' +
+                    '                                </div>\n' +
+                    '                        </footer>'
+                );
 
                 // if we're in an edition, build edition menu
                 var editionNum = scalarapi.getEdition(document.location.href);

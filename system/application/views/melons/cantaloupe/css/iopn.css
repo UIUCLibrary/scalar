@@ -5,6 +5,9 @@
         width: 100vw;
 }
 
+article.page {
+        margin-top: 67pt;
+}
 
 .iopn_header_scalar {
         padding-bottom: 10px;

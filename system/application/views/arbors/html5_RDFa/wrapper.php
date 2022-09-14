@@ -112,8 +112,8 @@ if (isset($page->version_index)) {
 <? if (isset($page) && !empty($page)): ?>
 <link rel="canonical" href="<?=confirm_slash($base_uri).$page->slug?>" />
 <? endif ?>
-<link rel="shortcut icon" href="<?=confirm_slash($app_root)?>views/arbors/html5_RDFa/favicon_16.gif" />
-<link rel="apple-touch-icon" href="<?=confirm_slash($app_root)?>views/arbors/html5_RDFa/favicon_114.jpg" />
+<link rel="shortcut icon" href="<?=confirm_slash($app_root)?>views/arbors/html5_RDFa/iopnfavicon-32x32.png" />
+<link rel="apple-touch-icon" href="<?=confirm_slash($app_root)?>views/arbors/html5_RDFa/iopnfavicon-32x32.png" />
 <? if (isset($page)&&!empty($page)): ?>
 <link id="urn" rel="scalar:urn" href="<?=$page->versions[$page->version_index]->urn?>" />
 <? endif ?>

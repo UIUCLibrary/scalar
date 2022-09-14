@@ -50,8 +50,8 @@ echo doctype('html5')."\n"
 <? if (isset($page) && !empty($page)): ?>
 <link rel="canonical" href="<?=confirm_slash($base_uri).$page->slug?>" />
 <? endif ?>
-<link rel="shortcut icon" href="<?=confirm_slash($app_root)?>views/arbors/html/favicon_16.gif" />
-<link rel="apple-touch-icon" href="<?=confirm_slash($app_root)?>views/arbors/html/favicon_114.jpg" />
+<link rel="shortcut icon" href="<?=confirm_slash($app_root)?>views/arbors/html/iopnfavicon-32x32.png" />
+<link rel="apple-touch-icon" href="<?=confirm_slash($app_root)?>views/arbors/html/iopnfavicon-32x32.png" />
 <? if (!empty($view)): ?>
 <link id="view" href="<?=('vis'==$view)?$viz_view:$view?>" />
 <link id="default_view" href="<?=$default_view?>" />

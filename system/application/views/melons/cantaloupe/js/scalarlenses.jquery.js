@@ -178,6 +178,7 @@
       let json = {
         "submitted": false,
         "hidden": true,
+        "interactive": false,
         "frozen": false,
         "frozen-items": [],
         "visualization": {
@@ -376,7 +377,7 @@
       // if not logged in
       // buttons can't be clicked
       let lensButtons = $(this.element).find('.lens-editor .btn');
-      if(this.userId == 'unknown'){
+      if(this.userId == 'unknown' && this.scalarLensObject.interactive === false){
         lensButtons.addClass('disabled');
       }
       // load frozen lens if frozen is true
@@ -3259,7 +3260,9 @@
         </div>`
       );
       // hide if user not logged in
-      if(this.userId == 'unknown'){
+      //allow anon users to download csv from lens
+      if(this.userId == 'unknown' && this.scalarLensObject.interactive === false)
+      {
         $(button).hide();
       } else {
         return button;
@@ -3280,6 +3283,12 @@
           } else {
             menuOptions.push({label: "Make private", value: "make-private"});
           }
+        }
+        if (this.scalarLensObject.interactive == false) {
+          menuOptions.push({label: "Permit anonymous interactions", value: "permit-anon-interaction"});
+
+        } else {
+          menuOptions.push({label: "Restrict anonymous interactions ", value: "restrict-anon-interaction"});
         }
         if (this.scalarLensObject.frozen) {
           menuOptions.push({label: "Unfreeze", value: "unfreeze"});
@@ -3334,6 +3343,33 @@
                 me.options.onLensResults(evt, lens)
               }
             }));
+            break;
+
+          case 'permit-anon-interaction':
+            if (confirm('Allow users to interact with this lens without logging in? Note: they will not be able to save or suggest lenses without logging in.')) {
+              me.scalarLensObject.interactive = true;
+              me.saveLens(() => me.getLensResults(me.scalarLensObject, (evt, lens) => {
+                if (scalarapi.model.getCurrentPageNode()) {
+                  location.reload();
+                } else {
+                  me.options.onLensResults(evt, lens)
+                }
+              }));
+            }
+            break;
+
+          case 'restrict-anon-interaction':
+            if (confirm('Restrict users from interacting with this lens\'s settings without logging in?')) {
+              me.scalarLensObject.interactive = false;
+
+              me.saveLens(() => me.getLensResults(me.scalarLensObject, (evt, lens) => {
+                if (scalarapi.model.getCurrentPageNode()) {
+                  location.reload();
+                } else {
+                  me.options.onLensResults(evt, lens)
+                }
+              }));
+            }
             break;
 
           case 'freeze':

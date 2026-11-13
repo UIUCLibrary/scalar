@@ -4789,7 +4789,8 @@ function YouTubeGetID(url){
 
 			this.frameId = 'html'+this.model.filename+'_'+this.model.id;
 
-			var obj = $('<div class="mediaObject" style="overflow: hidden"><div><iframe style="width: 100%; height: 100%;" id="'+this.frameId+'" src="'+this.model.path+'" frameborder="0"></iframe></div></div>').appendTo(this.parentView.mediaContainer);
+			// delegate fullscreen etc. so embedded players (e.g. Kaltura MediaSpace) can use them under Permissions Policy
+			var obj = $('<div class="mediaObject" style="overflow: hidden"><div><iframe style="width: 100%; height: 100%;" id="'+this.frameId+'" src="'+this.model.path+'" frameborder="0" allow="fullscreen; autoplay; encrypted-media; picture-in-picture; clipboard-write" allowfullscreen></iframe></div></div>').appendTo(this.parentView.mediaContainer);
 
 			// these styles enable momentum scrolling of iframes for mobile devices;
 			// if added for desktop browsers they cause double scrollbars

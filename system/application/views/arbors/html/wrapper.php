@@ -77,6 +77,9 @@ echo doctype('html5')."\n"
 <? endif ?>
 <link id="flowplayer_key" href="<?=$this->config->item('flowplayer_key')?>" />
 <link id="soundcloud_id" href="<?=$this->config->item('soundcloud_id')?>" />
+<? if (is_array($this->config->item('iframe_permissions'))): ?>
+<script type="application/json" id="iframe_permissions"><?=json_encode((object) $this->config->item('iframe_permissions'), JSON_HEX_TAG | JSON_HEX_AMP)?></script>
+<? endif ?>
 <? if (!$mode && $hypothesis): ?>
 <link id="hypothesis" href="true" />
 <? endif ?>

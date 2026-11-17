@@ -873,7 +873,7 @@ class Book extends MY_Controller {
 
 		if (!isset($this->data['page'])) $this->fallback();
 		$this->data['hide_versions'] = $this->books->is_hide_versions($this->data['book']);
-		$all = (isset($_GET['versions']) && 1==$_GET['versions']) ? true : false;
+		$all = false;  // IOPN: past versions are never served
 		if ($all && $this->data['hide_versions'] && !$this->login_is_book_admin()) $this->fallback();
 		$this->data['is_book_admin'] = $this->login_is_book_admin();
 

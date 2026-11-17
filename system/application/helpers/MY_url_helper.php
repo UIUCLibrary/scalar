@@ -192,6 +192,26 @@
 
     }
 
+    /**
+     * IOPN: the current-version URL for a version URL or version listing view.
+     * Drops the version number and any "versions" query parameter; keeps other extensions and parameters.
+     */
+    function iopn_versionless_url($base_url, $first_segment, $page_segments, $ext='', $query='') {
+
+    	$url = rtrim($base_url, '/').'/'.$first_segment.'/'.implode('/', $page_segments);
+    	if (!empty($ext)) $url .= '.'.$ext;
+    	$params = array();
+    	foreach (explode('&', (string) $query) as $param) {
+    		if ('' === $param) continue;
+    		$name = strtolower(urldecode(strstr($param.'=', '=', true)));
+    		if ('versions' == $name || 'versions[]' == $name) continue;
+    		$params[] = $param;
+    	}
+    	if (!empty($params)) $url .= '?'.implode('&', $params);
+    	return $url;
+
+    }
+
     function no_version($uri) {
 
     	if (!strstr($uri, '.')) return $uri;

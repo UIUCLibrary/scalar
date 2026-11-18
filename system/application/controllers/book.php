@@ -99,6 +99,16 @@ class Book extends MY_Controller {
 	}
 
 	/**
+	 * Versions are hidden for this book and the current user isn't a book admin
+	 */
+
+	private function versions_hidden() {
+
+		return ($this->books->is_hide_versions($this->data['book']) && !$this->login_is_book_admin());
+
+	}
+
+	/**
 	 * Load the current page
 	 */
 
@@ -113,8 +123,8 @@ class Book extends MY_Controller {
 			$page_not_found = false;
 			$this->data['tklabels'] = $this->tklabels();
 			if (!empty($page)) {
-				// Version being asked for
-				if (null !== $this->data['url_params']['version_num']) {
+				// Version being asked for (ignored if versions are hidden)
+				if (null !== $this->data['url_params']['version_num'] && !$this->versions_hidden()) {
 					$version = $this->versions->get_by_version_num($page->content_id, $this->data['url_params']['version_num']);
 					if (!empty($version) && null == $this->data['use_versions']) $this->data['use_versions'] = array();
 					if (!empty($version)) $this->data['use_versions'][$page->content_id] = $version->version_id;

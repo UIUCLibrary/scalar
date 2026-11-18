@@ -37,7 +37,7 @@ class Book extends MY_Controller {
 	private $rel_fields = array('start_seconds','end_seconds','start_line_num','end_line_num','points','position_3d','position_gis','datetime','paragraph_num');
 	private $vis_views = array('vis', 'visindex', 'vispath', 'vismedia', 'vistag');
 	private $fallback_melon = 'cantaloupe';  // This is independant of the default melon set in the config, which is used for new book creation
-	private $max_recursions = 2;  // Get relationships of the current page, and the relationships of those relationships (e.g., get this pages tags, and the pages those tags tag)
+	private $max_recursions = 2;  // Get the current page's relationships, plus the relationships of those relationships for paths and tags only (see RDF_Object::second_level_rel); annotations, replies and references stop at the current page
 
 	/**
 	 * Load the current book

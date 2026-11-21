@@ -166,7 +166,8 @@ CREATE TABLE IF NOT EXISTS `scalar_db_versions` (
   `created` datetime NOT NULL,
   `attribution` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`version_id`),
-  KEY `content_id` (`content_id`)
+  KEY `content_id` (`content_id`),
+  KEY `content_version` (`content_id`,`version_num`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `scalar_db_whitelist` (

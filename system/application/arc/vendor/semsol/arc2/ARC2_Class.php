@@ -55,6 +55,18 @@ class ARC2_Class
      */
     public array $warnings = [];
 
+    /**
+     * Shared database adapters, keyed by connection settings.
+     *
+     * Query handlers are constructed per query, so a per-instance cache is
+     * useless: every DESCRIBE used to open a new database connection, and a
+     * single page render of a large Scalar book opened several hundred.
+     * Static, so handlers built by the same ARC2_Store reuse one connection.
+     *
+     * @var array<string, \ARC2\Store\Adapter\AdapterInterface>
+     */
+    protected static array $shared_db_objects = [];
+
     public function __construct($a, &$caller)
     {
         $this->a = is_array($a) ? $a : [];
@@ -643,12 +655,29 @@ class ARC2_Class
                 $this->a['db_adapter'] = 'pdo';
                 $this->a['db_pdo_protocol'] = 'mysql';
             }
+
+            // One connection per distinct configuration, shared across every
+            // query handler in the request. Handlers are created per query, so
+            // without this each query opened (and closed) its own connection.
+            $key = md5(serialize([
+                $this->a['db_adapter'],
+                isset($this->a['db_host']) ? $this->a['db_host'] : null,
+                isset($this->a['db_port']) ? $this->a['db_port'] : null,
+                isset($this->a['db_name']) ? $this->a['db_name'] : null,
+                isset($this->a['db_user']) ? $this->a['db_user'] : null,
+            ]));
+
+            if (null == $con && isset(self::$shared_db_objects[$key])) {
+                return $this->db_object = self::$shared_db_objects[$key];
+            }
+
             $factory = new \ARC2\Store\Adapter\AdapterFactory();
             $this->db_object = $factory->getInstanceFor($this->a['db_adapter'], $this->a);
             if ($con) {
                 $this->db_object->connect($con);
             } else {
                 $this->db_object->connect();
+                self::$shared_db_objects[$key] = $this->db_object;
             }
         }
 

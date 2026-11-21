@@ -31,6 +31,7 @@ class RDF_Store {
 
 	private $store;
 	public $ns;
+	private $urn_cache = array();  // get_by_urn() results for this request, keyed by URN
 
     public function __construct() {
 
@@ -66,15 +67,20 @@ class RDF_Store {
 
     public function get_by_urn($urn='') {
 
+		// A page render resolves the same version many times (e.g., once as a path member and
+		// again as a tag target), and each DESCRIBE costs a temporary table in ARC2
+		if (array_key_exists($urn, $this->urn_cache)) return $this->urn_cache[$urn];
+
 		$q = 'DESCRIBE <'.$urn.'>';
 		$rs = $this->store->query($q);
 		if ($this->store->getErrors()) {
 			// Don't throw an error here... some errors on empty and have no consequence, but returning null or throwing an exception halts the fields from being returned
 		  	// throw new Exception('There were ARC2 errors: ' . $this->store->getErrors());
 		}
-		if (empty($rs['result'])) return null;
-		if (!isset($rs['result'][$urn]) || empty($rs['result'][$urn])) return null;
-		return $rs['result'][$urn];
+		$result = null;
+		if (!empty($rs['result']) && isset($rs['result'][$urn]) && !empty($rs['result'][$urn])) $result = $rs['result'][$urn];
+		$this->urn_cache[$urn] = $result;
+		return $result;
 
     }
     
@@ -215,6 +221,7 @@ class RDF_Store {
 		}
 
 		$this->store->insert($resource->index, $g);
+		unset($this->urn_cache[$urn]);
 		if ($errs = $this->store->getErrors()) {
 			print_r($errs);
 		}
@@ -235,6 +242,7 @@ class RDF_Store {
 				<'.$urn.'> ?p ?o .
 		}';
 		$done = $this->store->query($q);
+		unset($this->urn_cache[$urn]);
 		if ($errs = $this->store->getErrors()) {
 			print_r($errs);
 		}

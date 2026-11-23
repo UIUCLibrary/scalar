@@ -154,6 +154,14 @@ $config['index_hide_published'] = true;
 // Redlisted domains that won't let themselves be included in expernal.php's iframe
 $config['iframe_redlist'] = array('youtube.com', 'vimeo.com', 'google.com', 'microsoft.com', 'metmuseum.org', 'bloomberg.com', 'nytimes.com', 'nationalreview.com', 'theguardian.com', 'twitter.com'); 
 
+// Browser features (Permissions Policy) granted to web pages embedded as media, such as video players, keyed by domain
+// A domain also matches its subdomains; the most specific match wins, and '*' applies when no other domain matches
+// Values use the iframe "allow" attribute syntax: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#allow
+$config['iframe_permissions'] = array(
+  '*' => 'fullscreen',
+  // 'mediaspace.example.edu' => 'fullscreen; autoplay; encrypted-media; picture-in-picture',
+);
+
 // If true, external hyperlinks will go directly to the external page rather than attempt to be rendered in Scalar's external.php
 $config['external_direct_hyperlink'] = false;
 

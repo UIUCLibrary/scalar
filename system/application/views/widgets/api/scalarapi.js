@@ -820,6 +820,42 @@ ScalarAPI.prototype.removeMarkup = function( html ) {
 }
 
 /**
+ * Returns the iframe "allow" value for an embedded uri, per the iframe_permissions setting in local_settings.php.
+ * Falls back to fullscreen only if the setting isn't present on the page.
+ *
+ * @return	The allow attribute value (may be empty).
+ */
+ScalarAPI.prototype.getIframePermissions = function(uri) {
+
+	if (this.iframePermissions == null) {
+		this.iframePermissions = { '*': 'fullscreen' };
+		var config = $('#iframe_permissions');
+		if (config.length) {
+			try {
+				this.iframePermissions = JSON.parse(config.text()) || {};
+			} catch (e) {
+				console.log('Could not parse iframe_permissions: ' + e);
+			}
+		}
+	}
+
+	var host = '';
+	try {
+		host = new URL(uri, document.baseURI).hostname.toLowerCase();
+	} catch (e) {}
+
+	var match = null;
+	for (var domain in this.iframePermissions) {
+		var d = domain.toLowerCase();
+		if (d == '*' || !host) continue;
+		if ((host == d || host.endsWith('.' + d)) && (match == null || d.length > match.length)) match = domain;
+	}
+	if (match == null && this.iframePermissions.hasOwnProperty('*')) match = '*';
+
+	return (match != null && this.iframePermissions[match]) ? String(this.iframePermissions[match]) : '';
+}
+
+/**
  * Returns the type of media pointed to by the specified uri.
  *
  * TODO: Move this up a level (and other utils?), return icon name

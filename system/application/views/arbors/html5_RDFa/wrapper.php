@@ -151,6 +151,9 @@ if (isset($page->version_index)) {
 <? endif ?>
 <link id="flowplayer_key" href="<?=$this->config->item('flowplayer_key')?>" />
 <link id="soundcloud_id" href="<?=$this->config->item('soundcloud_id')?>" />
+<? if (is_array($this->config->item('iframe_permissions'))): ?>
+<script type="application/json" id="iframe_permissions"><?=json_encode((object) $this->config->item('iframe_permissions'), JSON_HEX_TAG | JSON_HEX_AMP)?></script>
+<? endif ?>
 <link id="recaptcha2_site_key" href="<?=$recaptcha2_site_key?>" />
 <link id="recaptcha_public_key" href="<?=$recaptcha_public_key?>" />
 <? if (is_array($this->config->item('airtable'))): ?>

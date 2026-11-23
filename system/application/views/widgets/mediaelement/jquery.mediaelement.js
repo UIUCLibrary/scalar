@@ -4789,7 +4789,16 @@ function YouTubeGetID(url){
 
 			this.frameId = 'html'+this.model.filename+'_'+this.model.id;
 
-			var obj = $('<div class="mediaObject" style="overflow: hidden"><div><iframe style="width: 100%; height: 100%;" id="'+this.frameId+'" src="'+this.model.path+'" frameborder="0"></iframe></div></div>').appendTo(this.parentView.mediaContainer);
+			var obj = $('<div class="mediaObject" style="overflow: hidden"><div><iframe style="width: 100%; height: 100%;" id="'+this.frameId+'" src="'+this.model.path+'" frameborder="0"></iframe></div></div>');
+
+			// permissions must be set before the iframe is attached, as they only apply when it navigates
+			var allow = scalarapi.getIframePermissions(this.model.path);
+			if (allow) {
+				obj.find('iframe').attr('allow', allow);
+				if (/(^|;)\s*fullscreen\b/i.test(allow)) obj.find('iframe').attr('allowfullscreen', '');
+			}
+
+			obj.appendTo(this.parentView.mediaContainer);
 
 			// these styles enable momentum scrolling of iframes for mobile devices;
 			// if added for desktop browsers they cause double scrollbars

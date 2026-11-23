@@ -1,0 +1,8 @@
+[submodule "system/application/views/widgets/ckeditor/plugins/scalarfootnotes"]
+	path = system/application/views/widgets/ckeditor/plugins/scalarfootnotes
+	url = https://github.com/UIUCLibrary/scalarfootnotes.git
+	branch = note-footnotes
+[submodule "system/application/plugins/transfer"]
+	path = system/application/plugins/transfer
+	url = https://github.com/Michael628/scalar-book-transfer-tool.git
+	branch = master

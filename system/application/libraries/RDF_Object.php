@@ -55,6 +55,8 @@ class RDF_Object {
 	protected $version_cache = array();
 	protected $user_cache = array();
 	protected $rel_fields = array('sort_number','start_seconds','end_seconds','start_line_num','end_line_num','points','position_3d','position_gis','additional','datetime','paragraph_num');
+	// Relationship models whose relationships are expanded one level deeper than the current page.  Everything else stops at the current page (see _relationships())
+	protected $second_level_rel = array('paths','tags');
 	protected $defaults = array(
 		'books'			=> null,
 		'book'			=> null,
@@ -892,6 +894,7 @@ class RDF_Object {
 			$version_id = $row->versions[$j]->version_id;
 			foreach ($models as $model) {
 				if (!empty($settings['restrict']) && !in_array($model, $settings['restrict'])) continue;
+				if ($settings['num_recurses'] > 0 && !in_array($model, $this->second_level_rel)) continue;  // Nested node: only expand the allowlisted models
 				$model_s = singular($model);
 				if ('object'!=@gettype($CI->$model)) $CI->load->model($model_s.'_model',$model);
 				if ($settings['rel'] == self::REL_PARENTS_ONLY || $settings['rel'] == self::REL_ALL) {

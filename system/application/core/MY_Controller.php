@@ -91,6 +91,18 @@ class MY_Controller extends CI_Controller {
 		$this->data['login_books']    = (isset($this->data['login']->user_id)) ? $this->login->get_books($this->data['login']->user_id) : array();
 		$this->data['login_book_ids'] = $this->login->get_book_ids($this->data['login_books']);
 
+		// IOPN: logged-in users bypass the Apache server cache (see MY_Output and the private iopn-scalar-ops repo)
+		if (!empty($this->data['login']->is_logged_in) && !isset($_COOKIE['scalar_nocache']) && !headers_sent()) {
+			$path = rtrim((string) parse_url(base_url(), PHP_URL_PATH), '/');
+			setcookie('scalar_nocache', '1', array(
+				'expires'  => time() + 43200,
+				'path'     => ('' === $path) ? '/' : $path,
+				'secure'   => (!empty($_SERVER['HTTPS']) && 'off' != $_SERVER['HTTPS']),
+				'httponly' => true,
+				'samesite' => 'Lax'
+			));
+		}
+
 	}
 
 	/**

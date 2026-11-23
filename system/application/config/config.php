@@ -402,3 +402,8 @@ $config['media_url'] = (getenv('MEDIA_URL') ? getenv('MEDIA_URL') : '');
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
+
+
+// IOPN: apply site settings (config/iopn/, tracked) and then server secrets (/etc/scalar/, not in git), each overriding the values above
+foreach (array(__DIR__.'/iopn/', '/etc/scalar/') as $iopn_dir) { if (is_file($iopn_dir.basename(__FILE__))) include $iopn_dir.basename(__FILE__); }
+unset($iopn_dir);

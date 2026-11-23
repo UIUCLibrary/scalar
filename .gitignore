@@ -1,2 +1,8 @@
 .ddev
 vendor
+system/application/logs/*
+!system/application/logs/index.html
+# IOPN: book folders live at the top level beside system/
+/*/
+!/system/
+!/.github/

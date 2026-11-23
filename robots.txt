@@ -1,0 +1,5 @@
+User-agent: *
+Crawl-delay: 5
+Disallow: /scalar/system/
+Disallow: /scalar/*/users/
+Disallow: /scalar/thesweetpublicdomain/users/

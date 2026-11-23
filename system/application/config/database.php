@@ -68,3 +68,7 @@ $db['default']['ARC_dbprefix'] = 'scalar_store_';  // Best not to change this
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */
+
+// IOPN: apply site settings (config/iopn/, tracked) and then server secrets (/etc/scalar/, not in git), each overriding the values above
+foreach (array(__DIR__.'/iopn/', '/etc/scalar/') as $iopn_dir) { if (is_file($iopn_dir.basename(__FILE__))) include $iopn_dir.basename(__FILE__); }
+unset($iopn_dir);

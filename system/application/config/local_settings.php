@@ -182,6 +182,10 @@ $config['override_edit_page_default_tab'] = array(
 // Load local_settings_custom.php, if it exists, to allow overrides via a separate file.
 if (file_exists(dirname(__FILE__).'/local_settings_custom.php')) { include 'local_settings_custom.php'; }
 
+// IOPN: apply site settings (config/iopn/, tracked) and then server secrets (/etc/scalar/, not in git), each overriding the values above
+foreach (array(__DIR__.'/iopn/', '/etc/scalar/') as $iopn_dir) { if (is_file($iopn_dir.basename(__FILE__))) include $iopn_dir.basename(__FILE__); }
+unset($iopn_dir);
+
 //EOF
 
 ?>

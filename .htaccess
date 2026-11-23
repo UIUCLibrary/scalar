@@ -1,6 +1,8 @@
 Options +FollowSymlinks
 
 RewriteEngine On
+# IOPN: Scalar is served from /scalar/
+RewriteBase /scalar/
 
 # Scalar pages have default views that are called when a URI has no
 # file extension Turn off the MultiView option (if it's on) so it

@@ -91,7 +91,7 @@ class Rdf extends MY_Controller {
 		if (is_int($this->data['meta_recursion'])) $this->data['include_meta'] = true;
 		// Display all versions?
 		$this->data['versions'] = (isset($_REQUEST['versions']) && $_REQUEST['versions']) ? true : false;
-		if ($this->books->is_hide_versions($this->data['book']) && !$this->login_is_book_admin()) $this->data['versions'] = false;
+		$this->data['versions'] = false;  // IOPN: past versions are never served
 		// Search terms
 		$this->data['sq'] = (isset($_REQUEST['sq']) && !empty($_REQUEST['sq'])) ? search_split_terms($_REQUEST['sq']) : null;
 		$this->data['s_all'] = (isset($_REQUEST['s_all']) && 1==$_REQUEST['s_all']) ? true : false;

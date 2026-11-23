@@ -151,6 +151,15 @@ class MY_Controller extends CI_Controller {
 		$this->data['url_params']['version_num'] = (is_numeric($this->data['url_params']['version_num'])) ? (int) $this->data['url_params']['version_num'] : null;
 		$this->data['url_params']['page_first_segment'] = (count($this->data['url_params']['page_segments']) > 0) ? no_version($this->data['url_params']['page_segments'][0]) : null;
 
+		// IOPN: past versions are never served. Version URLs (page.12, page.12.json) and the version
+		// listing views (.versions, .history) permanently redirect to the current published page.
+		$iopn_version_view = in_array(strtolower((string) $this->data['url_params']['ext']), array('versions', 'history'));
+		if ((null !== $this->data['url_params']['version_num'] || $iopn_version_view) && !empty($this->data['url_params']['page_segments'])) {
+			$query = (isset($_SERVER['QUERY_STRING'])) ? $_SERVER['QUERY_STRING'] : '';
+			header('Location: '.iopn_versionless_url(base_url(), $this->uri->segment(1), $this->data['url_params']['page_segments'], ($iopn_version_view ? '' : $this->data['url_params']['ext']), $query), true, 301);
+			exit;
+		}
+
 		$this->data['slug'] = implode('/', $this->data['url_params']['page_segments']);
 		$this->data['use_versions'] = null;
 		

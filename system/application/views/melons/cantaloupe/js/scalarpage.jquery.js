@@ -1371,11 +1371,10 @@
                 var decodedCookie = decodeURIComponent(document.cookie);
                 var currentNode = scalarapi.model.getCurrentPageNode();
                 var is_author_or_editor = false;
-                var can_show_versions = ($('.navbar-header .book-title').find('[data-hide-versions="true"]').length) ? false : true;
+                var can_show_versions = false;  // IOPN: past versions are never served
                 var $level = $('link#user_level');
                 if ($level.length) {
                 	if ('scalar:author' == $level.attr('href').toLowerCase() || 'scalar:editor' == $level.attr('href').toLowerCase()) {
-                        can_show_versions = true;
                         is_author_or_editor = true;
                     }
                 }
